@@ -1,0 +1,30 @@
+# Diretórios de build
+build/
+dist/
+
+# Arquivos de configuração privados do NetBeans
+nbproject/private/
+
+# Cache e temporários
+*.log
+*.class
+*.jar
+*.war
+*.ear
+
+# Arquivos gerados pelo sistema operacional
+.DS_Store
+Thumbs.db
+
+# Configurações do IDE específicas de usuário
+*.iml
+*.ipr
+*.iws
+
+# Outros temporários
+*.swp
+*.bak
+*.tmp
+*.orig
+nbproject/private/
+nbproject/project.properties
