@@ -28,4 +28,6 @@ o O sistema deve validar os dados de entrada, como o formato do CPF, telefone, e
 de nascimento, e garantir que não haja cadastro de clientes com dados obrigatórios em 
 branco. 
 o Mensagens de erro adequadas devem ser apresentadas, como tentativas de cadastrar um CPF 
-duplicado, excluir um cliente inexistente, ou editar um cliente com CPF inválido. 
+duplicado, excluir um cliente inexistente, ou editar um cliente com CPF inválido. git 
+
+Gustavo
