@@ -26,3 +26,5 @@ Thumbs.db
 *.bak
 *.tmp
 *.orig
+nbproject/private/
+nbproject/project.properties
