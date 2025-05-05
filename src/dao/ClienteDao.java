@@ -3,6 +3,7 @@ package dao;
 import factory.ConnectionFactory;
 import java.sql.*;
 import modelo.Cliente;
+import java.time.LocalDate;
 
 public class ClienteDao {
     // Tornando a connection final, pois não há motivo para mudar sua referência após a inicialização
@@ -15,12 +16,17 @@ public class ClienteDao {
 
     // Método para adicionar cliente ao banco de dados
     public void adiciona(Cliente cliente) {
-        String sql = "INSERT INTO cliente(nome,cpf,email,telefone,endereço,data_nascimento) VALUES(?)";
+        String sql = "INSERT INTO cliente(nome,cpf,email,telefone,endereço,data_nascimento) VALUES(?,?,?,?,?,?)";
  
 
         // Usando try-with-resources para garantir o fechamento automático tanto do PreparedStatement quanto da Connection
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setString(1, cliente.getNome(), cliente.getCpf());
+            stmt.setString(1, cliente.getNome());
+            stmt.setString(2, cliente.getCpf());
+            stmt.setString(3, cliente.getEmail());
+            stmt.setString(4, cliente.getTelefone());
+            stmt.setString(5, cliente.getEndereço());
+            stmt.setDate(6, java.sql.Date.valueOf(cliente.getData())); 
             stmt.execute();
         } catch (SQLException e) {
             // Captura de erro mais detalhada
