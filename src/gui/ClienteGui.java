@@ -201,7 +201,7 @@ public class ClienteGui extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-       System.exit(0);
+        System.exit(0);
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
@@ -212,37 +212,35 @@ public class ClienteGui extends javax.swing.JFrame {
         jTextField4.setText("");
         jTextField5.setText("");
         jTextField6.setText("");
-      
-        
+
+
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         Cliente cliente = new Cliente();
-            cliente.setNome(jTextField1.getText());
-            cliente.setCpf(jTextField2.getText());
-            cliente.setEmail(jTextField3.getText());
-            cliente.setTelefone(jTextField4.getText());
-            cliente.setEndereço(jTextField5.getText());
-            
-             // Converter o texto do JTextField para LocalDate
-    try {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        LocalDate data = LocalDate.parse(jTextField6.getText(), formatter);
-        cliente.setData(data);
-    } catch (DateTimeParseException e) {
-        JOptionPane.showMessageDialog(null, "Data inválida! Use o formato dd/MM/yyyy.");
-        return; // Sai do método se a data for inválida
-    }
-        
-        if ((jTextField1.getText().isEmpty())){
-            JOptionPane.showMessageDialog(null,"O compo não podem retornar vazio");
+        cliente.setNome(jTextField1.getText());
+        cliente.setCpf(jTextField2.getText());
+        cliente.setEmail(jTextField3.getText());
+        cliente.setTelefone(jTextField4.getText());
+        cliente.setEndereço(jTextField5.getText());
+        try {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            LocalDate data = LocalDate.parse(jTextField6.getText(), formatter);
+            cliente.setData(data);
+        } catch (DateTimeParseException e) {
+            JOptionPane.showMessageDialog(null, "Data inválida! Use o formato dd/MM/yyyy.");
+            jTextField6.setText("");
+            return;
         }
-        else{
+
+        if ((jTextField1.getText().isEmpty())) {
+            JOptionPane.showMessageDialog(null, "O compo não podem retornar vazio");
+        } else {
             ClienteDao dao = new ClienteDao();
             dao.adiciona(cliente);
-            JOptionPane.showMessageDialog(null,"Cliente" + jTextField1.getText()+" inserindo com sucesso! ");
+            JOptionPane.showMessageDialog(null, "Cliente" + jTextField1.getText() + " inserindo com sucesso! ");
         }
-        
+
         jTextField1.setText("");
         jTextField2.setText("");
         jTextField3.setText("");
