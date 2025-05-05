@@ -30,4 +30,3 @@ branco.
 o Mensagens de erro adequadas devem ser apresentadas, como tentativas de cadastrar um CPF 
 duplicado, excluir um cliente inexistente, ou editar um cliente com CPF inválido. git 
 
-Gustavo
