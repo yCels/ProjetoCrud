@@ -46,6 +46,48 @@ public class ClienteDao {
         }
     }
 
+    //metodo Buscar
+    public List<Cliente> buscarPorCpf(String cpf) throws SQLException {
+        List<Cliente> clientes = new ArrayList<>();
+        String sql = "SELECT * FROM cliente WHERE cpf = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setString(1, cpf);
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    clientes.add(mapearCliente(rs));
+                }
+            }
+        }
+        return clientes;
+    }
+
+    public List<Cliente> buscarPorNome(String nome) throws SQLException {
+        List<Cliente> clientes = new ArrayList<>();
+        String sql = "SELECT * FROM clientes WHERE nome LIKE ?";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setString(1, "%" + nome + "%"); // Busca por nome parcial
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    clientes.add(mapearCliente(rs));
+                }
+            }
+        }
+        return clientes;
+    }
+
+// Método auxiliar para mapear os resultados do ResultSet para o objeto Cliente
+    private Cliente mapearCliente(ResultSet rs) throws SQLException {
+        Cliente cliente = new Cliente();
+        cliente.setCodigo(rs.getInt("id"));
+        cliente.setNome(rs.getString("nome"));
+        cliente.setCpf(rs.getString("cpf"));
+        cliente.setEmail(rs.getString("email"));
+        cliente.setTelefone(rs.getString("telefone"));
+        cliente.setEndereço(rs.getString("endereço"));
+        cliente.setData(rs.getDate("data_nascimento").toLocalDate());
+        return cliente;
+    }
+
     //metodo listar clientes
     public List<Cliente> listarTodos() {
         String sql = "SELECT id, nome, cpf, email, telefone, endereço, data_nascimento FROM cliente";
