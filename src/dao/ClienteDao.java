@@ -51,9 +51,7 @@ public class ClienteDao {
         String sql = "SELECT id, nome, cpf, email, telefone, endereço, data_nascimento FROM cliente";
         List<Cliente> clientes = new ArrayList<>();
 
-        try (Connection conn = new ConnectionFactory().getConnection(); 
-                PreparedStatement stmt = conn.prepareStatement(sql); 
-                ResultSet rs = stmt.executeQuery()) {
+        try (Connection conn = new ConnectionFactory().getConnection(); PreparedStatement stmt = conn.prepareStatement(sql); ResultSet rs = stmt.executeQuery()) {
 
             while (rs.next()) {
                 Cliente cliente = new Cliente();
@@ -78,5 +76,24 @@ public class ClienteDao {
 
         return clientes;
     }
-    //buscar clientes no MySql
+    // metodo de atualização da tabela
+
+    public void atualizar(Cliente cliente) {
+        String sql = "UPDATE cliente SET nome=?, cpf=?, email=?, telefone=?, endereço=?, data_nascimento=? WHERE id=?";
+
+        try (Connection conn = new ConnectionFactory().getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, cliente.getNome());
+            stmt.setString(2, cliente.getCpf());
+            stmt.setString(3, cliente.getEmail());
+            stmt.setString(4, cliente.getTelefone());
+            stmt.setString(5, cliente.getEndereço());
+            stmt.setDate(6, java.sql.Date.valueOf(cliente.getData()));
+            stmt.setInt(7, cliente.getCodigo());
+
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao atualizar cliente", e);
+        }
+    }
 }
