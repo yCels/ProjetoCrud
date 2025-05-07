@@ -79,11 +79,11 @@ public class ClienteGui extends javax.swing.JFrame {
         jTextField5 = new javax.swing.JTextField();
         jButton4 = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
+        jButtonExcluir = new javax.swing.JButton();
+        jButtonEditar = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        jButtonEditar = new javax.swing.JButton();
-        jButtonExcluir = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -132,6 +132,20 @@ public class ClienteGui extends javax.swing.JFrame {
             }
         });
 
+        jButtonExcluir.setText("Excluir");
+        jButtonExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonExcluirActionPerformed(evt);
+            }
+        });
+
+        jButtonEditar.setText("Editar");
+        jButtonEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonEditarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -170,7 +184,11 @@ public class ClienteGui extends javax.swing.JFrame {
                 .addGap(86, 86, 86))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addComponent(jButton1)
+                .addGap(18, 18, 18)
+                .addComponent(jButtonEditar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButtonExcluir)
+                .addGap(27, 27, 27)
                 .addComponent(jButton4)
                 .addContainerGap())
         );
@@ -204,7 +222,9 @@ public class ClienteGui extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton4)
-                    .addComponent(jButton1))
+                    .addComponent(jButton1)
+                    .addComponent(jButtonExcluir)
+                    .addComponent(jButtonEditar))
                 .addContainerGap())
         );
 
@@ -236,20 +256,6 @@ public class ClienteGui extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(jTable1);
 
-        jButtonEditar.setText("Editar");
-        jButtonEditar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonEditarActionPerformed(evt);
-            }
-        });
-
-        jButtonExcluir.setText("Excluir");
-        jButtonExcluir.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonExcluirActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -258,34 +264,25 @@ public class ClienteGui extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 947, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButtonEditar)
-                        .addGap(35, 35, 35)
-                        .addComponent(jButtonExcluir)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 947, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGap(314, 314, 314)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton3))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 204, Short.MAX_VALUE)
-                .addComponent(jButton3))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButtonEditar)
-                    .addComponent(jButtonExcluir))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton3, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())))
         );
 
         pack();
@@ -443,9 +440,46 @@ public class ClienteGui extends javax.swing.JFrame {
         // TODO add your handling code here:
         editarCliente();
     }//GEN-LAST:event_jButtonEditarActionPerformed
+    //metodo excluir 
+
+    private void excluirCliente() {
+        int linhaSelecionada = jTable1.getSelectedRow();
+
+        if (linhaSelecionada == -1) {
+            JOptionPane.showMessageDialog(this,
+                    "Selecione um cliente na tabela para excluir",
+                    "Aviso",
+                    JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        // Obtém o ID do cliente na linha selecionada
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        Integer id = (Integer) model.getValueAt(linhaSelecionada, 0);
+
+        int confirmacao = JOptionPane.showConfirmDialog(this,
+                "Tem certeza de que deseja excluir o cliente selecionado?",
+                "Confirmação",
+                JOptionPane.YES_NO_OPTION);
+
+        if (confirmacao == JOptionPane.YES_OPTION) {
+            try {
+                ClienteDao dao = new ClienteDao();
+                dao.excluir(id); // Método para excluir o cliente no DAO
+                carregarDadosNaTabela(); // Atualiza a tabela
+                JOptionPane.showMessageDialog(this, "Cliente excluído com sucesso!");
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this,
+                        "Erro ao excluir cliente: " + e.getMessage(),
+                        "Erro",
+                        JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }
 
     private void jButtonExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExcluirActionPerformed
-        // TODO add your handling code here:
+
+        excluirCliente();
     }//GEN-LAST:event_jButtonExcluirActionPerformed
     // carregar dados
 

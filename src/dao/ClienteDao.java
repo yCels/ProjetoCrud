@@ -96,4 +96,13 @@ public class ClienteDao {
             throw new RuntimeException("Erro ao atualizar cliente", e);
         }
     }
+
+    //metodo excluir id
+    public void excluir(int id) throws SQLException {
+        String sql = "DELETE FROM cliente WHERE id = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setInt(1, id);
+            stmt.executeUpdate();
+        }
+    }
 }
