@@ -28,6 +28,7 @@ public class ClienteGui extends javax.swing.JFrame {
         carregarDadosNaTabela();
 
     }
+    //config dados tabela
 
     private void configurarTabela() {
         DefaultTableModel model = new DefaultTableModel(
@@ -81,6 +82,8 @@ public class ClienteGui extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        jButtonEditar = new javax.swing.JButton();
+        jButtonExcluir = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -233,19 +236,36 @@ public class ClienteGui extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(jTable1);
 
+        jButtonEditar.setText("Editar");
+        jButtonEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonEditarActionPerformed(evt);
+            }
+        });
+
+        jButtonExcluir.setText("Excluir");
+        jButtonExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonExcluirActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButtonEditar)
+                        .addGap(35, 35, 35)
+                        .addComponent(jButtonExcluir)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 947, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addComponent(jButton3))
@@ -260,6 +280,10 @@ public class ClienteGui extends javax.swing.JFrame {
                 .addComponent(jButton3))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButtonEditar)
+                    .addComponent(jButtonExcluir))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -284,47 +308,145 @@ public class ClienteGui extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        Cliente cliente = new Cliente();
-        cliente.setNome(jTextField1.getText());
-        cliente.setCpf(jTextField2.getText());
-        cliente.setEmail(jTextField3.getText());
-        cliente.setTelefone(jTextField4.getText());
-        cliente.setEndereço(jTextField5.getText());
-
-        try {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-            LocalDate data = LocalDate.parse(jTextField6.getText(), formatter);
-            cliente.setData(data);
-        } catch (DateTimeParseException e) {
-            JOptionPane.showMessageDialog(null, "Data inválida! Use o formato dd/MM/yyyy.");
-            jTextField6.setText("");
-            return;
-        }
-
-        if (jTextField1.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "O campo não pode retornar vazio");
+        if ("Atualizar".equals(jButton1.getText())) {
+            atualizarCliente();
         } else {
+            // Código original de cadastro
+            Cliente cliente = new Cliente();
+            cliente.setNome(jTextField1.getText());
+            cliente.setCpf(jTextField2.getText());
+            cliente.setEmail(jTextField3.getText());
+            cliente.setTelefone(jTextField4.getText());
+            cliente.setEndereço(jTextField5.getText());
+
             try {
-                ClienteDao dao = new ClienteDao();
-                dao.adiciona(cliente);
-                JOptionPane.showMessageDialog(null, "Cliente " + jTextField1.getText() + " inserido com sucesso!");
-
-                // ATUALIZA A TABELA AQUI (LINHA ADICIONADA)
-                carregarDadosNaTabela();
-
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, "Erro ao cadastrar: " + e.getMessage());
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                LocalDate data = LocalDate.parse(jTextField6.getText(), formatter);
+                cliente.setData(data);
+            } catch (DateTimeParseException e) {
+                JOptionPane.showMessageDialog(null, "Data inválida! Use o formato dd/MM/yyyy.");
+                jTextField6.setText("");
+                return;
             }
-        }
 
-        // Limpa os campos
+            if (jTextField1.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(null, "O campo não pode retornar vazio");
+            } else {
+                try {
+                    ClienteDao dao = new ClienteDao();
+                    dao.adiciona(cliente);
+                    JOptionPane.showMessageDialog(null, "Cliente " + jTextField1.getText() + " inserido com sucesso!");
+                    carregarDadosNaTabela();
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(null, "Erro ao cadastrar: " + e.getMessage());
+                }
+            }
+
+            // Limpa os campos
+            jTextField1.setText("");
+            jTextField2.setText("");
+            jTextField3.setText("");
+            jTextField4.setText("");
+            jTextField5.setText("");
+            jTextField6.setText("");
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+    //metodo limpar campos
+
+    private void limparCampos() {
         jTextField1.setText("");
         jTextField2.setText("");
         jTextField3.setText("");
         jTextField4.setText("");
         jTextField5.setText("");
         jTextField6.setText("");
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }
+
+    // metodo editar
+    private void editarCliente() {
+        int linhaSelecionada = jTable1.getSelectedRow();
+
+        if (linhaSelecionada == -1) {
+            JOptionPane.showMessageDialog(this,
+                    "Selecione um cliente na tabela para editar",
+                    "Aviso",
+                    JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        // Preenche os campos com os dados da linha selecionada
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        jTextField1.setText(model.getValueAt(linhaSelecionada, 1).toString()); // Nome
+        jTextField2.setText(model.getValueAt(linhaSelecionada, 2).toString()); // CPF
+        jTextField3.setText(model.getValueAt(linhaSelecionada, 3).toString()); // Email
+        jTextField4.setText(model.getValueAt(linhaSelecionada, 4).toString()); // Telefone
+        jTextField5.setText(model.getValueAt(linhaSelecionada, 5).toString()); // Endereço
+        jTextField6.setText(model.getValueAt(linhaSelecionada, 6).toString()); // Data
+
+        // Muda o botão Cadastrar para Atualizar
+        jButton1.setText("Atualizar");
+
+        // Guarda o ID do cliente que está sendo editado
+        jButton1.putClientProperty("id_edicao", model.getValueAt(linhaSelecionada, 0));
+    }
+
+    //metodoAtualizarCliente
+    private void atualizarCliente() {
+        try {
+            // Obtém o ID do cliente em edição
+            Integer id = (Integer) jButton1.getClientProperty("id_edicao");
+            if (id == null) {
+                throw new Exception("ID do cliente não encontrado");
+            }
+
+            // Cria o objeto Cliente com os dados do formulário
+            Cliente cliente = new Cliente();
+            cliente.setCodigo(id);
+            cliente.setNome(jTextField1.getText());
+            cliente.setCpf(jTextField2.getText());
+            cliente.setEmail(jTextField3.getText());
+            cliente.setTelefone(jTextField4.getText());
+            cliente.setEndereço(jTextField5.getText());
+
+            try {
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                cliente.setData(LocalDate.parse(jTextField6.getText(), formatter));
+            } catch (DateTimeParseException e) {
+                JOptionPane.showMessageDialog(this, "Data inválida! Use o formato dd/MM/yyyy.");
+                return;
+            }
+
+            // Atualiza no banco de dados
+            ClienteDao dao = new ClienteDao();
+            dao.atualizar(cliente);
+
+            // Atualiza a tabela e limpa o formulário
+            carregarDadosNaTabela();
+            limparCampos();
+
+            // Restaura o botão para o estado original
+            jButton1.setText("Cadastrar");
+            jButton1.putClientProperty("id_edicao", null);
+
+            JOptionPane.showMessageDialog(this, "Cliente atualizado com sucesso!");
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this,
+                    "Erro ao atualizar cliente: " + e.getMessage(),
+                    "Erro",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+
+    private void jButtonEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEditarActionPerformed
+        // TODO add your handling code here:
+        editarCliente();
+    }//GEN-LAST:event_jButtonEditarActionPerformed
+
+    private void jButtonExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExcluirActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButtonExcluirActionPerformed
     // carregar dados
 
     private void carregarDadosNaTabela() {
@@ -391,6 +513,8 @@ public class ClienteGui extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButtonEditar;
+    private javax.swing.JButton jButtonExcluir;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
