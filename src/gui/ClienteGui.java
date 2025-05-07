@@ -93,6 +93,7 @@ public class ClienteGui extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Informações do Cliente")
         );
@@ -147,26 +148,26 @@ public class ClienteGui extends javax.swing.JFrame {
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                 .addGap(0, 0, Short.MAX_VALUE)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(9, 9, 9)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 213, Short.MAX_VALUE)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(jTextField2, javax.swing.GroupLayout.DEFAULT_SIZE, 213, Short.MAX_VALUE)
-                                        .addComponent(jTextField3)
-                                        .addComponent(jTextField4))))
+                                .addGap(36, 36, 36))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel8)
-                                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jTextField6)
-                                    .addComponent(jTextField5))))
-                        .addGap(39, 39, 39))
+                                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(jTextField1)
+                                .addComponent(jTextField2, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jTextField3, javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jTextField4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jTextField6)
+                                .addComponent(jTextField5)))
+                        .addGap(18, 18, 18))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jButton4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -190,8 +191,8 @@ public class ClienteGui extends javax.swing.JFrame {
                     .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -529,63 +530,61 @@ public class ClienteGui extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonExcluirActionPerformed
     //metodo Buscar
     private void buscarCliente() {
-    // Obtém o texto do campo de busca
-    String textoBusca = jTextField7.getText().trim();
+        // Obtém o texto do campo de busca
+        String textoBusca = jTextField7.getText().trim();
 
-    // Se o campo está vazio, exibe uma mensagem de erro
-    if (textoBusca.isEmpty()) {
-        JOptionPane.showMessageDialog(this,
-                "Digite um CPF ou Nome para buscar.",
-                "Aviso",
-                JOptionPane.WARNING_MESSAGE);
-        return;
-    }
-
-    try {
-        ClienteDao dao = new ClienteDao();
-        List<Cliente> resultados;
-
-        // Verifica se é uma busca por CPF (apenas números)
-        if (textoBusca.matches("\\d+")) {
-            resultados = dao.buscarPorCpf(textoBusca);
-        } else {
-            resultados = dao.buscarPorNome(textoBusca);
+        // Se o campo estiver vazio, carrega todos os dados novamente
+        if (textoBusca.isEmpty()) {
+            carregarDadosNaTabela(); // restaura todos os registros
+            return;
         }
 
-        // Atualiza a tabela com os resultados
-        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-        model.setRowCount(0); // Limpa a tabela
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        try {
+            ClienteDao dao = new ClienteDao();
+            List<Cliente> resultados;
 
-        for (Cliente cliente : resultados) {
-            String dataFormatada = cliente.getData() != null
-                    ? cliente.getData().format(formatter) : "";
+            // Verifica se é uma busca por CPF (apenas números)
+            if (textoBusca.matches("\\d+")) {
+                resultados = dao.buscarPorCpf(textoBusca);
+            } else {
+                resultados = dao.buscarPorNome(textoBusca);
+            }
 
-            model.addRow(new Object[]{
-                cliente.getCodigo(),
-                cliente.getNome(),
-                cliente.getCpf(),
-                cliente.getEmail(),
-                cliente.getTelefone(),
-                cliente.getEndereço(),
-                dataFormatada
-            });
-        }
+            // Atualiza a tabela com os resultados
+            DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+            model.setRowCount(0); // Limpa a tabela
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
-        if (resultados.isEmpty()) {
+            for (Cliente cliente : resultados) {
+                String dataFormatada = cliente.getData() != null
+                        ? cliente.getData().format(formatter) : "";
+
+                model.addRow(new Object[]{
+                    cliente.getCodigo(),
+                    cliente.getNome(),
+                    cliente.getCpf(),
+                    cliente.getEmail(),
+                    cliente.getTelefone(),
+                    cliente.getEndereço(),
+                    dataFormatada
+                });
+            }
+
+            if (resultados.isEmpty()) {
+                JOptionPane.showMessageDialog(this,
+                        "Nenhum cliente encontrado.",
+                        "Aviso",
+                        JOptionPane.INFORMATION_MESSAGE);
+            }
+
+        } catch (Exception e) {
             JOptionPane.showMessageDialog(this,
-                    "Nenhum cliente encontrado.",
-                    "Aviso",
-                    JOptionPane.INFORMATION_MESSAGE);
+                    "Erro ao buscar cliente: " + e.getMessage(),
+                    "Erro",
+                    JOptionPane.ERROR_MESSAGE);
         }
-
-    } catch (Exception e) {
-        JOptionPane.showMessageDialog(this,
-                "Erro ao buscar cliente: " + e.getMessage(),
-                "Erro",
-                JOptionPane.ERROR_MESSAGE);
     }
-}
+
     private void jButtonBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBuscarActionPerformed
         buscarCliente();
     }//GEN-LAST:event_jButtonBuscarActionPerformed
